@@ -1,0 +1,7 @@
+#deliciousIncsearchButton {
+  list-style-image: url("chrome://delicious_incsearch/skin/icon-medium.png");
+}
+
+toolbar[iconsize="small"] #deliciousIncsearchButton {
+  list-style-image: url("chrome://delicious_incsearch/skin/icon-small.png");
+}
