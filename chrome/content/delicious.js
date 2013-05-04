@@ -35,7 +35,7 @@ for (var prop in LoaderBase.prototype) {
   DeliciousLoader.prototype[prop] = LoaderBase.prototype[prop];
 }
 
-DeliciousLoader.prototype.url = 'https://api.del.icio.us/v1/posts/all?results=10000000';
+DeliciousLoader.prototype.url = 'https://api.delicious.com/v1/posts/all?results=10000000';
 
 DeliciousLoader.prototype._load = function() {
 
@@ -80,38 +80,16 @@ DeliciousLoader.prototype._load = function() {
         );
 
         executer.run();
-
       } else {
         // error
-        var errMsg = 'error :' + request.status + ' :' + request.statusText + ' :' + self.url;
+        var errMsg = 'error: ' + request.status + ': ' + request.statusText + ': ' + self.url;
         self.error(errMsg);
       }
     }
   };
   request.open("POST", this.url, true);
-  request.setRequestHeader('Authorization', 'Basic '+ window.btoa('cookie:cookie'));
-  request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-  request.send(this.getAuthTokenByCookie());
+  request.send(null);
 };
-
-
-DeliciousLoader.prototype.getAuthTokenByCookie = function() {
-
-  var cookieManager = Components.classes["@mozilla.org/cookiemanager;1"]
-                                  .getService(Components.interfaces.nsICookieManager);
-  var iter = cookieManager.enumerator;
-  while(iter.hasMoreElements()) {
-    var cookie = iter.getNext();
-    if (cookie instanceof Components.interfaces.nsICookie) {
-      if ((cookie.host == '.delicious.com') && cookie.name == '_user') {
-        return '_user=' + encodeURIComponent(cookie.value);
-      }
-    }
-  }
-  return null;
-};
-
 
 IncSearch.prototype.createEditUrl = function(bookmark) {
 
